@@ -29,7 +29,7 @@ const init = async () => {
         if (err) {
             return console.error(err);
         }
-        
+
         files.forEach(file => {
             if (!file.endsWith(".js")) {
                 return;
