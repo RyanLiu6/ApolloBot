@@ -1,5 +1,5 @@
-# Token
-token.json
+# Config (including token)
+config.json
 
 # Logs
 logs

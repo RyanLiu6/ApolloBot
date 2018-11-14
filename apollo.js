@@ -3,10 +3,10 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 
 // Requirement for Discord Token - Not pushed
-const tokenJson = require("./token.json");
+const configJson = require("./config.json");
 
 // Prefix for messages
-const prefix = "!";
+const prefix = configJson.prefix;
 
 // On load
 client.on("ready", () => {
@@ -26,4 +26,4 @@ client.on("message", (message) => {
 });
 
 // Log in
-client.login(tokenJson["Token"]);
+client.login(configJson.token);
