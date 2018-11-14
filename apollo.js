@@ -1,29 +1,49 @@
 // Basic requirements
 const Discord = require("discord.js");
+const Enmap = require("enmap");
+const fs = require("fs");
+
+// Discord client
 const client = new Discord.Client();
 
-// Requirement for Discord Token - Not pushed
-const configJson = require("./config.json");
+// Attaching config and prefix to client for global availability
+client.config = require("./config.json");;
+client.prefix = client.config.prefix;
 
-// Prefix for messages
-const prefix = configJson.prefix;
+const init = async () => {
+    fs.readdir("./events/", (err, files) => {
+        if (err) {
+            return console.error(err);
+        }
 
-// On load
-client.on("ready", () => {
-    console.log("I am ready!");
-});
+        files.forEach(file => {
+            const event = require(`./events/${file}`);
+            let eventName = file.split(".")[0];
+            client.on(eventName, event.bind(null, client));
+        });
+    });
 
-// On message
-client.on("message", (message) => {
-    // Check if prefix exists
-    if (!(message.content.startsWith(prefix)) || message.author.bot) {
-        return;
-    }
+    client.commands = new Enmap();
 
-    if (message.content.startsWith(prefix + "ping")) {
-        message.channel.send("pong!");
-    }
-});
+    fs.readdir("./commands/", (err, files) => {
+        if (err) {
+            return console.error(err);
+        }
+        
+        files.forEach(file => {
+            if (!file.endsWith(".js")) {
+                return;
+            }
 
-// Log in
-client.login(configJson.token);
+            let props = require(`./commands/${file}`);
+            let commandName = file.split(".")[0];
+            console.log(`Attempting to load command ${commandName}`);
+            client.commands.set(commandName, props);
+        });
+    });
+
+    // Here we login the client.
+    client.login(client.config.token);
+};
+
+init();
