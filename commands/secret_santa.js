@@ -30,13 +30,11 @@ exports.run = (client, message, args) => {
     console.log(giverMap);
 
     // Set initialUser for perfect cycle
-    initialUser = notAccounted[randInt(num)];
+    randUser = randInt(num);
+    initialUser = notAccounted[randUser];
 
     // Main loop
     while (notAccounted.length > 1) {
-        // Random the index
-        randUser = randInt(num);
-
         // First get the Gift Giver
         giftGiver = notAccounted[randUser];
         notAccounted.splice(randUser, 1);
@@ -50,6 +48,9 @@ exports.run = (client, message, args) => {
         console.log(giftGiver);
         console.log(giftReceiver);
         giverMap[giftGiver] = giftReceiver;
+
+        // Random the index
+        randUser = randInt(num);
     }
 
     // Lastly, set the mapping for the last person
