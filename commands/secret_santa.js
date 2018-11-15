@@ -1,5 +1,15 @@
 // Secret Santa
 exports.run = (client, message, args) => {
+    // Check if the command was ran by the owner
+    if (message.author.username != client.config.owner) {
+        return;
+    }
+
+    // Remove duplicates from args array
+    let uniqueArgs = args.filter(function(item, pos) {
+        return args.indexOf(item) == pos;
+    });
+
     /* Secret Santa Algorithm:
      * Use two arrays:
      * 1. Keep track of users that have been accounted for already
@@ -12,7 +22,7 @@ exports.run = (client, message, args) => {
     let randUser = null;
     let giftGiver = null;
     let giftReceiver = null;
-    let num = args.length;
+    let num = uniqueArgs.length;
     let notAccounted = [];
 
     // First create the array of not yet accounted from arguments
@@ -38,19 +48,15 @@ exports.run = (client, message, args) => {
         // First get the Gift Giver
         giftGiver = notAccounted[randUser];
         notAccounted.splice(randUser, 1);
-        num = notAccounted.length;
+        num--;
 
         // Roll to get Gift Receiver
         // Guaranteed to be difference since giftGiver was removed from the array
-        giftReceiver = notAccounted[randInt(num)];
+        randUser = randInt(num);
+        giftReceiver = notAccounted[randUser];
 
         // Create Mapping
-        console.log(giftGiver);
-        console.log(giftReceiver);
         giverMap[giftGiver] = giftReceiver;
-
-        // Random the index
-        randUser = randInt(num);
     }
 
     // Lastly, set the mapping for the last person
