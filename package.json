@@ -1,0 +1,24 @@
+{
+  "name": "apollobot",
+  "version": "1.0.0",
+  "description": "Custom Discord Bot",
+  "main": "apollo.js",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "enmap": "^4.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RyanLiu6/ApolloBot.git"
+  },
+  "author": "ryanliu6",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RyanLiu6/ApolloBot/issues"
+  },
+  "homepage": "https://github.com/RyanLiu6/ApolloBot#readme"
+}
