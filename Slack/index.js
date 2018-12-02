@@ -1,6 +1,7 @@
 const slackEventsApi = require('@slack/events-api');
 const SlackClient = require('@slack/client').WebClient;
 const express = require('express');
+const Mention = require("./mentionCommands");
 
 // *** Initialize an Express application
 const app = express();
@@ -11,6 +12,9 @@ const slack = new SlackClient(process.env.SLACK_ACCESS_TOKEN);
 // *** Initialize event adapter using signing secret from environment variables ***
 const slackEvents = slackEventsApi.createEventAdapter(process.env.SLACK_SIGNING_SECRET);
 
+// Apollo Prefix
+const PREFIX_SUGGEST = "suggest";
+const PREFIX_CHECK = "check";
 
 // Homepage
 app.get('/', (req, res) => {
@@ -28,26 +32,30 @@ app.use('/slack/events', slackEvents.expressMiddleware());
 // *** Greeting any user that says "hi" ***
 slackEvents.on('app_mention', (message) => {
   console.log(message);
-  if (message.text.startsWith("hi")) {
-    slack.chat.postMessage({
-      channel: message.channel,
-      text: `ya yah yeet <@${message.user}>`
-    })
-    .catch(console.error);
-  }
+
+  // Get user arguments and pass it to the command parser
+  var userArr = message.text.split(" ");
+
+  // Storing properties to the slack client for easier access
+  slack.command = userArr[1];
+  slack.arg = userArr.slice(1);
+  slack.retChannel = message.channel;
+  slack.retUser = message.user;
+
+  Mention.commandParser(slack);
 });
 
-// *** Responding to reactions with the same emoji ***
-slackEvents.on('reaction_added', (event) => {
-  console.log(event);
-  // Respond to the reaction back with the same emoji
+// // *** Responding to reactions with the same emoji ***
+// slackEvents.on('reaction_added', (event) => {
+//   console.log(event);
+//   // Respond to the reaction back with the same emoji
 
-  slack.chat.postMessage({
-    channel: event.item.channel,
-    text: `:${event.reaction}:`
-  })
-  .catch(console.error);
-});
+//   slack.chat.postMessage({
+//     channel: event.item.channel,
+//     text: `:${event.reaction}:`
+//   })
+//   .catch(console.error);
+// });
 
 // *** Handle errors ***
 slackEvents.on('error', (error) => {
