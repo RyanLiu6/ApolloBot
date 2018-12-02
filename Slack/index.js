@@ -12,10 +12,6 @@ const slack = new SlackClient(process.env.SLACK_ACCESS_TOKEN);
 // *** Initialize event adapter using signing secret from environment variables ***
 const slackEvents = slackEventsApi.createEventAdapter(process.env.SLACK_SIGNING_SECRET);
 
-// Apollo Prefix
-const PREFIX_SUGGEST = "suggest";
-const PREFIX_CHECK = "check";
-
 // Homepage
 app.get('/', (req, res) => {
   const url = `https://${req.hostname}/slack/events`;
@@ -44,18 +40,6 @@ slackEvents.on('app_mention', (message) => {
 
   Mention.commandParser(slack);
 });
-
-// // *** Responding to reactions with the same emoji ***
-// slackEvents.on('reaction_added', (event) => {
-//   console.log(event);
-//   // Respond to the reaction back with the same emoji
-
-//   slack.chat.postMessage({
-//     channel: event.item.channel,
-//     text: `:${event.reaction}:`
-//   })
-//   .catch(console.error);
-// });
 
 // *** Handle errors ***
 slackEvents.on('error', (error) => {
