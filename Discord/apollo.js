@@ -1,3 +1,4 @@
+// Deploying to Now
 // Basic requirements
 const Discord = require("discord.js");
 const Enmap = require("enmap");
@@ -7,8 +8,7 @@ const fs = require("fs");
 const client = new Discord.Client();
 
 // Attaching config and prefix to client for global availability
-client.config = require("./config.json");;
-client.prefix = client.config.prefix;
+client.prefix = process.env.PREFIX;
 
 const init = async () => {
     fs.readdir("./events/", (err, files) => {
@@ -43,7 +43,7 @@ const init = async () => {
     });
 
     // Here we login the client.
-    client.login(client.config.token);
+    client.login(process.env.TOKEN);
 };
 
 init();
