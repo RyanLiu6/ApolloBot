@@ -5,6 +5,7 @@
   "main": "apollo.js",
   "dependencies": {
     "discord.js": "^11.5.1",
+    "dotenv": "^8.2.0",
     "enmap": "^5.2.0"
   },
   "devDependencies": {},

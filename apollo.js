@@ -4,6 +4,10 @@ const Discord = require("discord.js");
 const Enmap = require("enmap");
 const fs = require("fs");
 
+// Set up for local only
+// const dotenv = require('dotenv');
+// dotenv.config();
+
 // Discord client
 const client = new Discord.Client();
 

@@ -1,7 +1,7 @@
 // Secret Santa
 exports.run = (client, message, args) => {
     // Check if the command was ran by the owner
-    if (message.author.username != client.config.owner) {
+    if (message.author.username != "mablibsking") {
         return;
     }
 
