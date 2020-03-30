@@ -4,9 +4,10 @@
   "description": "Custom Discord Bot",
   "main": "apollo.js",
   "dependencies": {
-    "discord.js": "^11.5.1",
+    "discord.js": "^12.1.1",
     "dotenv": "^8.2.0",
-    "enmap": "^5.2.0"
+    "enmap": "^5.2.4",
+    "snoowrap": "^1.21.0"
   },
   "devDependencies": {},
   "scripts": {
