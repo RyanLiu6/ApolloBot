@@ -2,8 +2,8 @@ let timestamp = -1
 let time_label = "created_utc";
 let subreddit = "acturnips"
 
-let buy_regex = new RegExp("buy.*[4-6].*", "i");
-let sell_regex = new RegExp("sell.*[9].*", "i");
+let buy_regex = new RegExp("buy.*", "i");
+let sell_regex = new RegExp("sell.*", "i");
 
 exports.check = async (discord, reddit) => {
   // if timestamp is -1, we need to run setup
